@@ -40,7 +40,7 @@ def create_feeding_schedule(
 
         # Сохранение через сервис (генерация события)
         event = feeding_service.add_feeding_schedule(schedule)
-        return {"id": schedule.id, "event": event.dict()}
+        return {"id": schedule.id, "event": event.__dict__}
 
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

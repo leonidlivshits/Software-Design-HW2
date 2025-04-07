@@ -35,5 +35,5 @@ class FeedingOrganizationService:
         return FeedingTimeEvent(
             schedule_id=schedule.id,
             animal_id=schedule.animal.id,
-            feeding_time=schedule.feeding_time.value
+            feeding_time=schedule.feeding_time.value.strftime("%H:%M")
         )

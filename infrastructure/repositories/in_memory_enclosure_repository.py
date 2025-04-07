@@ -11,10 +11,12 @@ class InMemoryEnclosureRepository(IEnclosureRepository):
         self.counter = 0
 
     def save(self, enclosure):
-        logger.info(f"Сохранение вольера ID={enclosure.id}")
-        self.counter += 1
-        enclosure.id = str(self.counter)  # Присваиваем последовательный ID
+        # Если вольер уже имеет ID — обновляем, иначе создаем новый
+        if enclosure.id is None:
+            self.counter += 1
+            enclosure.id = str(self.counter)
         self.enclosures[enclosure.id] = enclosure
+        logger.info(f"Сохранен вольер ID={enclosure.id} (всего: {len(self.enclosures)})")
 
     def get_by_id(self, enclosure_id):
         logger.info(f"Поиск вольера ID={enclosure_id}")

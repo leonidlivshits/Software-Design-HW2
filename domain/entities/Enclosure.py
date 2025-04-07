@@ -24,6 +24,9 @@ class Enclosure:
             raise ValueError("Вольер переполнен")
         if animal.species.compatible_enclosure_type != self.type:
             raise ValueError("Несовместимый тип вольера")
+        if animal.id in self.current_animals:
+            raise ValueError("Животное уже находится в этом вольере")
+        
         self.current_animals.append(animal.id)
         animal.enclosure_id = self.id
 

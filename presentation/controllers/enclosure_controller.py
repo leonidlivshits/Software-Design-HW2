@@ -30,7 +30,7 @@ def create_enclosure(
         # )
 
         enclosure = Enclosure(
-            id=None, #str(uuid.uuid4()),  # Уникальный ID
+            id=None, #str(len(enclosure_repo.get_all()) + 1), #None, #str(uuid.uuid4()),  # Уникальный ID
             enclosure_type=type_vo,
             size=size,
             max_capacity=max_capacity
@@ -78,7 +78,12 @@ def add_animal_to_enclosure(
         animal = animal_repo.get_by_id(animal_id)
         
         if not enclosure or not animal:
-            raise HTTPException(status_code=404, detail="Object not found")
+            raise HTTPException(status_code=404, detail="Объект не найден")
+
+        # Проверка 1: Животное уже в другом вольере?
+        if animal.enclosure_id is not None:
+            if animal.enclosure_id != enclosure_id:
+                raise ValueError("Животное уже находится в другом вольере")
         
         enclosure.add_animal(animal)
         enclosure_repo.save(enclosure)
