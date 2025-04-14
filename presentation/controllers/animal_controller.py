@@ -82,8 +82,9 @@ def create_animal(
     name: str,
     birth_date: str,
     gender: str,
-    favorite_food: str,
-    animal_repo: InMemoryAnimalRepository = Depends(get_animal_repo)
+    is_healthy: bool = True,
+    animal_repo: InMemoryAnimalRepository = Depends(get_animal_repo),
+
 ):
     try:
         species_vo = Species(species)
@@ -93,7 +94,7 @@ def create_animal(
             name=name,
             birth_date=birth_date,
             gender=gender,
-            favorite_food=favorite_food
+            is_healthy=is_healthy
         )
         animal_repo.save(animal)
         return {"id": animal.id, "name": animal.name}
@@ -121,6 +122,17 @@ def delete_animal(animal_id: str, animal_repo: InMemoryAnimalRepository = Depend
     animal_repo.delete(animal_id)
     return {"message": "Animal deleted"}
 
+@router.post("/{animal_id}/heal")
+def heal_animal(
+    animal_id: str,
+    animal_repo: InMemoryAnimalRepository = Depends(get_animal_repo)
+):
+    animal = animal_repo.get_by_id(animal_id)
+    if not animal:
+        raise HTTPException(status_code=404, detail="Animal not found")
+    animal.heal()
+    animal_repo.save(animal)
+    return {"message": "Animal healed"}
 
 @router.post("/{animal_id}/move")
 def move_animal(

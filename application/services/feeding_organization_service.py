@@ -17,16 +17,11 @@ class FeedingOrganizationService:
         animal = self.animal_repo.get_by_id(animal_id)
         if not animal:
             raise ValueError("Животное не найдено")
-
-        # Проверка здоровья
         if not animal.is_healthy:
-            raise ValueError("Больных животных нельзя кормить")
+            raise ValueError("Животное больно! Вылечите его, чтобы кормить!")
+        if food_type != animal.species.food_type:
+            raise ValueError("Неверный тип пищи для этого вида")
 
-        # Проверка типа пищи
-        if food_type != animal.favorite_food:
-            raise ValueError("Животное отказывается от этой еды")
-
-        # Обновление статуса
         animal.feed(food_type)
         self.animal_repo.save(animal)
 

@@ -19,3 +19,6 @@ class InMemoryAnimalRepository(IAnimalRepository):
 
     def get_all(self):
         return list(self.animals.values())
+    
+    def get_animal_count(self) -> int:
+        return len(self.animals)

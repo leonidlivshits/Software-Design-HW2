@@ -13,7 +13,6 @@ router = APIRouter(prefix="/enclosures")
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_enclosure(
     enclosure_type: str,
-    size: float,
     max_capacity: int,
     enclosure_repo: InMemoryEnclosureRepository = Depends(get_enclosure_repo)
 ):
@@ -21,18 +20,9 @@ def create_enclosure(
         # Валидация типа вольера
         type_vo = EnclosureType(enclosure_type)
         
-        # Создание вольера
-        # enclosure = Enclosure(
-        #     id=str(len(enclosure_repo.get_all()) + 1),
-        #     enclosure_type=type_vo,
-        #     size=size,
-        #     max_capacity=max_capacity
-        # )
-
         enclosure = Enclosure(
             id=None, #str(len(enclosure_repo.get_all()) + 1), #None, #str(uuid.uuid4()),  # Уникальный ID
             enclosure_type=type_vo,
-            size=size,
             max_capacity=max_capacity
         )
 

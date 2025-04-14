@@ -10,12 +10,10 @@ class Enclosure:
         self,
         id: str,
         enclosure_type: EnclosureType,
-        size: float,
         max_capacity: int
     ):
         self.id = id
         self.type = enclosure_type
-        self.size = size
         self.max_capacity = max_capacity
         self.current_animals = []
 
