@@ -1,4 +1,3 @@
-
 from domain.repositories.IEnclosureRepository import IEnclosureRepository
 
 import logging
@@ -11,7 +10,6 @@ class InMemoryEnclosureRepository(IEnclosureRepository):
         self.counter = 0
 
     def save(self, enclosure):
-        # Если вольер уже имеет ID — обновляем, иначе создаем новый
         if enclosure.id is None:
             self.counter += 1
             enclosure.id = str(self.counter)
@@ -24,3 +22,7 @@ class InMemoryEnclosureRepository(IEnclosureRepository):
     
     def get_all(self):
         return list(self.enclosures.values())
+    
+    def delete(self, enclosure_id):
+        if enclosure_id in self.enclosures:
+            del self.enclosures[enclosure_id]

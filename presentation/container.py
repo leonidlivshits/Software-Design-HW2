@@ -60,7 +60,7 @@ class Container(containers.DeclarativeContainer):
     enclosure_repo = providers.Singleton(InMemoryEnclosureRepository)
     feeding_repo = providers.Singleton(InMemoryFeedingScheduleRepository)
     
-    # Сервисы (Factory)
+    # Factory
     animal_transfer_service = providers.Factory(
         AnimalTransferService,
         animal_repo=animal_repo,
@@ -80,7 +80,6 @@ class Container(containers.DeclarativeContainer):
     )
 
 
-# Создаем единственный экземпляр контейнера
 container = Container()
 
 def get_animal_repo() -> InMemoryAnimalRepository:

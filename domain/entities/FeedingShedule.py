@@ -1,8 +1,8 @@
 class FeedingSchedule:
     def __init__(self, id, animal, feeding_time, food_type):
         self.id = id
-        self.animal = animal  # Ссылка на Animal
-        self.feeding_time = feeding_time  # Value Object (FeedingTime)
+        self.animal = animal
+        self.feeding_time = feeding_time
         self.food_type = food_type
         self.is_completed = False
 

@@ -26,7 +26,6 @@ class AnimalTransferService:
             if not new_enclosure:
                 raise ValueError("Новый вольер не найден")
 
-            # Проверка текущего вольера животного
             old_enclosure = None
             if animal.enclosure_id is not None:
                 logger.info(f"Поиск старого вольера с ID={animal.enclosure_id}")
@@ -39,14 +38,11 @@ class AnimalTransferService:
             )
             if new_enclosure.type != animal.species.compatible_enclosure_type:
                 raise ValueError("Тип вольера не совместим с видом животного")
-            # Валидация бизнес-правил
-            # if new_enclosure.type != animal.species.compatible_enclosure_type:
-            #     raise ValueError("Тип вольера не совместим с видом животного")
+            
 
             if len(new_enclosure.current_animals) >= new_enclosure.max_capacity:
                 raise ValueError("Новый вольер переполнен")
 
-            # Обновление данных
             if old_enclosure:
                 logger.info(f"Удаление животного из старого вольера {old_enclosure.id}")
                 old_enclosure.remove_animal(animal)
@@ -56,11 +52,9 @@ class AnimalTransferService:
             new_enclosure.add_animal(animal)
             self.enclosure_repo.save(new_enclosure)
 
-            # Обновляем ссылку на вольер у животного
             animal.enclosure_id = new_enclosure.id
             self.animal_repo.save(animal)
 
-            # Генерация события
             event = AnimalMovedEvent(
                 animal_id=animal.id,
                 old_enclosure_id=old_enclosure.id if old_enclosure else None,

@@ -1,4 +1,3 @@
-# testing/test_application/test_services/test_feeding_organization_service.py
 import pytest
 
 from domain.entities.Animal import Animal

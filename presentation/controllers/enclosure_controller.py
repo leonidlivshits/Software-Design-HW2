@@ -1,4 +1,3 @@
-# presentation/controllers/enclosure_controller.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from domain.entities.Enclosure import Enclosure
 from domain.value_objects.EnclosureType import EnclosureType
@@ -17,11 +16,11 @@ def create_enclosure(
     enclosure_repo: InMemoryEnclosureRepository = Depends(get_enclosure_repo)
 ):
     try:
-        # Валидация типа вольера
+
         type_vo = EnclosureType(enclosure_type)
         
         enclosure = Enclosure(
-            id=None, #str(len(enclosure_repo.get_all()) + 1), #None, #str(uuid.uuid4()),  # Уникальный ID
+            id=None, #str(len(enclosure_repo.get_all()) + 1), #None, #str(uuid.uuid4()),
             enclosure_type=type_vo,
             max_capacity=max_capacity
         )
@@ -70,7 +69,6 @@ def add_animal_to_enclosure(
         if not enclosure or not animal:
             raise HTTPException(status_code=404, detail="Объект не найден")
 
-        # Проверка 1: Животное уже в другом вольере?
         if animal.enclosure_id is not None:
             if animal.enclosure_id != enclosure_id:
                 raise ValueError("Животное уже находится в другом вольере")

@@ -1,4 +1,3 @@
-# presentation/controllers/stats_controller.py
 from fastapi import APIRouter, Depends
 from application.services.zoo_statistics_service import ZooStatisticsService
 from presentation.container import get_stats_service

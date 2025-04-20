@@ -22,7 +22,6 @@ def create_feeding_schedule(
     feeding_service: FeedingOrganizationService = Depends(get_feeding_service)
 ):
     try:
-        # Проверка существования животного
         animal = animal_repo.get_by_id(animal_id)
         if not animal:
             raise HTTPException(status_code=404, detail="Animal not found")
@@ -37,7 +36,6 @@ def create_feeding_schedule(
             food_type=food_type
         )
 
-        # Сохранение через сервис (генерация события)
         event = feeding_service.add_feeding_schedule(schedule)
         return {"id": schedule.id, "event": event.__dict__}
 
@@ -57,19 +55,6 @@ def get_schedule(
     if not schedule:
         raise HTTPException(status_code=404, detail="Schedule not found")
     return schedule
-
-# @router.post("/{schedule_id}/complete")
-# def mark_as_completed(
-#     schedule_id: str,
-#     feeding_repo: InMemoryFeedingScheduleRepository = Depends(get_feeding_repo)
-# ):
-#     schedule = feeding_repo.get_by_id(schedule_id)
-#     if not schedule:
-#         raise HTTPException(status_code=404, detail="Schedule not found")
-    
-#     schedule.mark_as_completed()
-#     feeding_repo.save(schedule)
-#     return {"message": "Schedule marked as completed"}
 
 
 @router.post("/{schedule_id}/complete")

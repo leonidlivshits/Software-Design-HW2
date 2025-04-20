@@ -1,4 +1,3 @@
-# infrastructure/repositories/in_memory_feeding_repository.py
 from collections import defaultdict
 
 from domain.entities.FeedingShedule import FeedingSchedule
@@ -30,5 +29,5 @@ class InMemoryFeedingScheduleRepository(IFeedingScheduleRepository):
     def get_all(self):
         return list(self.schedules.values())
     
-    def get_by_id(self, schedule_id: str): #-> FeedingSchedule | None:
+    def get_by_id(self, schedule_id: str):
         return self.schedules.get(schedule_id)
