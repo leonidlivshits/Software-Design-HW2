@@ -103,3 +103,54 @@ class FeedingSchedule:
 
 Таким образом, проект следует подходу DDD и поддерживает отделение бизнес‑логики от деталей хранения и доставки API.
 
+# Запуск проекта
+
+
+## 1. Клонировать репозиторий
+
+```bash
+git clone https://github.com/leonidlivshits/Software-Design-HW2.git
+cd Software-Design-HW2
+```
+
+## 2. Создать и активировать виртуальное окружение
+
+Windows (cmd.exe):
+```bat
+python -m venv venv
+venv/scripts/activate 
+```
+
+Linux/macOS:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+## 3. Установить зависимости
+
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+_Если нет requirements.txt, создайте его из текущего окружения:_
+```bash
+pip freeze > requirements.txt
+```
+
+## 4. Запустить сервер FastAPI
+
+```bash
+uvicorn presentation.web_api.app:app --reload
+```
+
+- Swagger UI:  http://localhost:8000/docs
+
+## 5. Запустить тесты с покрытием
+
+```bash
+pytest -s --cov --cov-report html --cov-fail-under 100
+```
+
+
